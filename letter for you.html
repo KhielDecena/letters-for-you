@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>If I Had the Courage... 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#f9a8d4;--lavender:#c4b5fd;--blue:#a5f3fc;
+    --rose:#fb7185;--deep:#7c3aed;
+    --glass:rgba(255,255,255,0.18);--glass-border:rgba(255,255,255,0.35);
+    --text:#3b1a4a;--soft:#fdf2f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Lato',sans-serif;min-height:100vh;
+    background:linear-gradient(135deg,#fce7f3 0%,#ede9fe 35%,#cffafe 70%,#fdf4ff 100%);
+    background-attachment:fixed;color:var(--text);overflow-x:hidden;transition:background .6s,color .6s;
+  }
+  body.dark{
+    --glass:rgba(20,5,40,0.45);--glass-border:rgba(255,255,255,0.15);
+    --text:#f5e7ff;--soft:#1a0a2e;
+    background:linear-gradient(135deg,#1a0a2e 0%,#0f0c29 50%,#0d1b2a 100%);
+  }
+
+  /* BG HEARTS */
+  #hearts-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+  .bg-heart{position:absolute;bottom:-60px;opacity:0;animation:floatUp linear infinite;cursor:pointer;pointer-events:all;user-select:none;}
+  @keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:.7;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+
+  /* LAYOUT */
+  section{position:relative;z-index:1;padding:80px 20px;}
+  .container{max-width:880px;margin:0 auto;}
+  .glass{
+    background:var(--glass);border:1.5px solid var(--glass-border);border-radius:24px;
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    box-shadow:0 8px 32px rgba(124,58,237,0.12);padding:40px 36px;
+  }
+  .display{font-family:'Playfair Display',serif;line-height:1.15;}
+  .script{font-family:'Dancing Script',cursive;}
+
+  /* TOPBAR */
+  #topbar{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:flex-end;align-items:center;gap:10px;
+    padding:12px 24px;background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.2);
+    flex-wrap:wrap;
+  }
+  .icon-btn{
+    background:var(--glass);border:1px solid var(--glass-border);border-radius:50%;
+    width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:1.2rem;transition:transform .2s,background .2s;flex-shrink:0;
+  }
+  .icon-btn:hover{transform:scale(1.15);background:rgba(255,255,255,0.3);}
+  #heart-score{
+    background:var(--glass);border:1px solid var(--glass-border);
+    border-radius:20px;padding:6px 14px;font-size:.85rem;font-weight:700;color:var(--rose);
+    cursor:default;transition:transform .15s;
+  }
+  #save-indicator{
+    font-size:.7rem;opacity:.6;padding:4px 10px;border-radius:12px;
+    background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.3);color:#10b981;
+    display:none;
+  }
+
+  /* HERO */
+  #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding-top:100px;}
+  #hero h1{
+    font-size:clamp(2.4rem,6vw,4.2rem);
+    background:linear-gradient(135deg,#db2777,#7c3aed,#0891b2);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    margin-bottom:20px;animation:fadeDown .8s ease both;
+    min-height:1.2em;
+  }
+  #hero-sub{font-size:clamp(1.1rem,2.5vw,1.4rem);font-style:italic;opacity:.85;margin-bottom:40px;animation:fadeDown .8s .2s ease both;min-height:1.4em;}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .hero-btn{
+    display:inline-flex;align-items:center;gap:10px;padding:16px 40px;
+    background:linear-gradient(135deg,#db2777,#7c3aed);color:#fff;border:none;border-radius:50px;
+    font-size:1.15rem;font-family:'Lato',sans-serif;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 24px rgba(219,39,119,0.35);transition:transform .2s,box-shadow .2s;
+    animation:pulse 2s infinite;
+  }
+  .hero-btn:hover{transform:scale(1.06);box-shadow:0 8px 32px rgba(219,39,119,0.5);}
+  @keyframes pulse{0%,100%{box-shadow:0 4px 24px rgba(219,39,119,0.35);}50%{box-shadow:0 4px 40px rgba(219,39,119,0.7);}}
+
+  /* SECTION HEADINGS */
+  .sec-title{text-align:center;margin-bottom:36px;}
+  .sec-title h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:8px;}
+  .sec-title p{opacity:.7;font-style:italic;}
+
+  /* QUIZ */
+  .question-card{margin-bottom:28px;}
+  .question-card h3{font-size:1.15rem;margin-bottom:16px;font-weight:700;}
+  .options{display:grid;gap:10px;}
+  .opt-btn{
+    width:100%;padding:14px 20px;text-align:left;
+    background:rgba(255,255,255,0.22);border:1.5px solid rgba(255,255,255,0.4);
+    border-radius:14px;cursor:pointer;font-size:1rem;font-family:'Lato',sans-serif;color:inherit;transition:all .2s;
+  }
+  .opt-btn:hover:not(:disabled){background:rgba(219,39,119,0.15);border-color:#db2777;transform:translateX(6px);}
+  .opt-btn.correct{background:rgba(219,39,119,0.25);border-color:#db2777;animation:popIn .3s ease;}
+  @keyframes popIn{0%{transform:scale(0.96);}60%{transform:scale(1.04);}100%{transform:scale(1);}}
+  .answer-msg{text-align:center;margin-top:14px;font-size:1.05rem;font-weight:700;color:#db2777;animation:fadeUp .4s ease both;display:none;}
+
+  /* LOVE METER */
+  #love-meter{text-align:center;}
+  .meter-wrap{width:100%;max-width:420px;margin:0 auto 28px;background:rgba(255,255,255,0.2);border-radius:50px;height:28px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.4);}
+  .meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#f9a8d4,#db2777,#7c3aed);border-radius:50px;transition:width .05s linear;}
+  #meter-pct{font-size:2.2rem;font-weight:700;margin:12px 0;color:#db2777;font-family:'Dancing Script',cursive;}
+  .calc-btn{padding:14px 36px;background:linear-gradient(135deg,#f43f5e,#7c3aed);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s;font-family:'Lato',sans-serif;}
+  .calc-btn:hover{transform:scale(1.06);}
+  #destiny-msg{margin-top:20px;font-size:1.1rem;font-style:italic;font-weight:700;display:none;color:#7c3aed;}
+
+  /* MEMORY WALL */
+  .memory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+  .mem-card{perspective:800px;cursor:pointer;height:180px;}
+  .mem-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1);}
+  .mem-card.flipped .mem-inner{transform:rotateY(180deg);}
+  .mem-front,.mem-back{
+    position:absolute;inset:0;border-radius:20px;display:flex;align-items:center;justify-content:center;
+    padding:24px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:var(--glass);border:1.5px solid var(--glass-border);backdrop-filter:blur(14px);
+  }
+  .mem-front{font-size:1.05rem;font-style:italic;font-weight:600;}
+  .mem-back{transform:rotateY(180deg);font-family:'Dancing Script',cursive;font-size:1.1rem;background:linear-gradient(135deg,rgba(219,39,119,0.2),rgba(124,58,237,0.2));}
+  .mem-front::before{content:'💌';display:block;font-size:1.8rem;margin-bottom:10px;}
+
+  /* SECRET LETTER */
+  #secret{text-align:center;}
+  .envelope-wrap{display:inline-block;font-size:5rem;cursor:pointer;transition:transform .3s;user-select:none;}
+  .envelope-wrap:hover{transform:scale(1.1) rotate(-5deg);}
+  .envelope-wrap.open{animation:envelopeOpen .5s ease forwards;}
+  @keyframes envelopeOpen{0%{transform:scale(1);}30%{transform:scale(1.2) rotate(-10deg);}60%{transform:scale(1.3) rotate(5deg);}100%{transform:scale(1) rotate(0deg);}}
+  .letter-reveal{max-width:560px;margin:28px auto 0;display:none;animation:fadeUp .6s ease both;}
+  .letter-reveal p{font-family:'Dancing Script',cursive;font-size:1.25rem;line-height:1.8;color:#7c3aed;}
+  body.dark .letter-reveal p{color:#c4b5fd;}
+  .open-btn{margin-top:20px;padding:14px 36px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s;font-family:'Lato',sans-serif;}
+  .open-btn:hover{transform:scale(1.06);}
+
+  /* ── CATCH HEARTS GAME ── */
+  #catch-game-sec{text-align:center;}
+  #catch-arena{
+    position:relative;width:100%;max-width:500px;height:320px;margin:0 auto 16px;
+    background:rgba(255,255,255,0.1);border-radius:20px;border:1.5px solid var(--glass-border);
+    overflow:hidden;cursor:none;
+  }
+  #catcher{
+    position:absolute;bottom:10px;width:70px;height:22px;
+    background:linear-gradient(135deg,#db2777,#7c3aed);border-radius:50px;
+    transition:left .05s;transform:translateX(-50%);
+  }
+  .falling-heart{position:absolute;font-size:1.5rem;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(360px) rotate(360deg);}}
+  #catch-score-display{font-size:1.5rem;font-weight:700;color:#db2777;font-family:'Dancing Script',cursive;margin-bottom:8px;}
+  #catch-lives{font-size:1.2rem;margin-bottom:12px;letter-spacing:4px;}
+  #catch-start-btn{padding:12px 30px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;font-size:1rem;transition:transform .2s;}
+  #catch-start-btn:hover{transform:scale(1.06);}
+  #catch-msg{margin-top:10px;font-style:italic;opacity:.8;min-height:1.4em;}
+
+  /* ── MEMORY MATCH GAME ── */
+  #match-game-sec{text-align:center;}
+  #match-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    max-width:400px;margin:0 auto 16px;
+  }
+  .match-card{
+    aspect-ratio:1;border-radius:14px;cursor:pointer;
+    background:linear-gradient(135deg,#db2777,#7c3aed);
+    display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+    border:2px solid transparent;transition:transform .3s,border-color .2s;
+    transform-style:preserve-3d;position:relative;user-select:none;
+  }
+  .match-card .card-face{
+    position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;font-size:1.6rem;
+  }
+  .match-card .card-back{background:linear-gradient(135deg,#db2777,#7c3aed);}
+  .match-card .card-back::after{content:'💗';font-size:1.4rem;}
+  .match-card .card-front{background:rgba(255,255,255,0.25);backdrop-filter:blur(8px);transform:rotateY(180deg);}
+  .match-card.revealed{transform:rotateY(180deg);}
+  .match-card.matched{border-color:#10b981;animation:matchPop .4s ease;}
+  @keyframes matchPop{0%{transform:rotateY(180deg) scale(0.9);}50%{transform:rotateY(180deg) scale(1.12);}100%{transform:rotateY(180deg) scale(1);}}
+  #match-info{display:flex;justify-content:center;gap:24px;margin-bottom:14px;font-weight:700;}
+  #match-start-btn{padding:12px 30px;background:linear-gradient(135deg,#f43f5e,#7c3aed);color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;font-size:1rem;transition:transform .2s;}
+  #match-start-btn:hover{transform:scale(1.06);}
+  #match-msg{margin-top:12px;font-style:italic;opacity:.8;min-height:1.4em;}
+
+  /* FINAL */
+  #final{text-align:center;}
+  #final h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:32px;}
+  .choice-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .yes-btn{padding:16px 44px;border:none;border-radius:50px;font-size:1.1rem;font-weight:700;cursor:pointer;color:#fff;font-family:'Lato',sans-serif;transition:transform .2s,box-shadow .2s;}
+  .yes-btn:first-child{background:linear-gradient(135deg,#f43f5e,#ec4899);box-shadow:0 4px 20px rgba(244,63,94,0.4);}
+  .yes-btn:last-child{background:linear-gradient(135deg,#8b5cf6,#6366f1);box-shadow:0 4px 20px rgba(139,92,246,0.4);}
+  .yes-btn:hover{transform:scale(1.1);}
+
+  /* SUCCESS OVERLAY */
+  #success-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:linear-gradient(135deg,rgba(249,168,212,0.96),rgba(196,181,253,0.96));
+    display:none;align-items:center;justify-content:center;flex-direction:column;
+    text-align:center;padding:40px;
+  }
+  #success-overlay.show{display:flex;animation:fadeIn .5s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  #success-overlay h1{font-size:clamp(2rem,6vw,4rem);color:#7c3aed;margin-bottom:20px;}
+  #success-overlay p{font-size:1.3rem;font-style:italic;color:#db2777;}
+  .close-overlay{margin-top:28px;padding:12px 32px;background:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer;color:#7c3aed;font-size:1rem;}
+
+  /* FOOTER */
+  footer{text-align:center;padding:40px 20px;font-style:italic;opacity:.75;font-size:.95rem;position:relative;z-index:1;}
+
+  /* PARTICLES */
+  .confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;z-index:9998;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+  .burst-heart{position:fixed;pointer-events:none;z-index:9997;font-size:1.6rem;animation:burstFly .9s ease forwards;}
+  @keyframes burstFly{0%{opacity:1;transform:scale(0.5) translate(0,0);}100%{opacity:0;transform:scale(1.4) translate(var(--dx),var(--dy));}}
+
+  /* PHYSICS HEART */
+  .phys-heart{position:fixed;pointer-events:none;z-index:9996;font-size:1.3rem;will-change:transform;}
+
+  /* EASTER EGG */
+  #easter-msg{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,#db2777,#7c3aed);color:#fff;
+    padding:14px 32px;border-radius:50px;font-weight:700;z-index:9000;
+    display:none;animation:fadeUp .5s ease both;font-size:1rem;text-align:center;max-width:90vw;
+  }
+
+  /* STARS */
+  .star{position:fixed;background:#fff;border-radius:50%;pointer-events:none;z-index:0;animation:twinkle linear infinite;}
+  @keyframes twinkle{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+  /* TYPEWRITER CURSOR */
+  .tw-cursor{display:inline-block;width:2px;height:1em;background:currentColor;margin-left:2px;animation:blink .7s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+  /* TOAST */
+  .toast{
+    position:fixed;top:80px;right:20px;z-index:9500;
+    background:linear-gradient(135deg,#db2777,#7c3aed);color:#fff;
+    padding:10px 20px;border-radius:14px;font-size:.9rem;font-weight:700;
+    animation:toastIn .3s ease both;pointer-events:none;max-width:260px;
+  }
+  @keyframes toastIn{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+  @keyframes toastOut{from{opacity:1;}to{opacity:0;transform:translateX(30px);}}
+
+  @media(max-width:600px){
+    .glass{padding:28px 18px;}
+    section{padding:60px 16px;}
+    #match-grid{grid-template-columns:repeat(4,1fr);gap:6px;max-width:320px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <span id="save-indicator">💾 Saved</span>
+  <div id="heart-score">💗 0</div>
+  <div class="icon-btn" id="music-toggle" title="Music">🎵</div>
+  <div class="icon-btn" id="dark-toggle" title="Dark mode">🌙</div>
+</div>
+
+<!-- BG HEARTS -->
+<div id="hearts-bg"></div>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="container">
+    <div class="glass" style="text-align:center;">
+      <p class="script" style="font-size:1.3rem;margin-bottom:12px;opacity:.7;">✨ a little something, just for you ✨</p>
+      <h1 class="display" id="hero-title"></h1>
+      <p id="hero-sub"></p>
+      <button class="hero-btn" id="open-heart-btn">💌 Open My Heart</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ QUIZ ═══════ -->
+<section id="quiz">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">💭 How Well Do You Know Me?</h2>
+      <p>Answer honestly... or don't. Either way, I already know. 😉</p>
+    </div>
+    <div class="glass">
+      <div class="question-card" id="q1">
+        <h3>1. What's my favorite thing about you?</h3>
+        <div class="options">
+          <button class="opt-btn" onclick="answerQuiz(this,'q1')">Your smile ☺️</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q1')">Your personality ✨</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q1')">Your kindness 🌸</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q1')">Everything 💖</button>
+        </div>
+        <div class="answer-msg" id="ans-q1">Correct. The answer is everything. ❤️</div>
+      </div>
+      <div class="question-card" id="q2">
+        <h3>2. What do I think when I see you?</h3>
+        <div class="options">
+          <button class="opt-btn" onclick="answerQuiz(this,'q2')">"Oh no, here come the butterflies..."</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q2')">"Why do I suddenly forget how to talk?"</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q2')">"I hope I look okay right now..."</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q2')">All of the above 😅</button>
+        </div>
+        <div class="answer-msg" id="ans-q2">Correct. All. Of. The. Above. Every. Single. Time. ❤️</div>
+      </div>
+      <div class="question-card" id="q3">
+        <h3>3. What's the one word I'd use to describe you?</h3>
+        <div class="options">
+          <button class="opt-btn" onclick="answerQuiz(this,'q3')">Wonderful 🌟</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q3')">Unforgettable 💫</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q3')">Perfect 💕</button>
+          <button class="opt-btn" onclick="answerQuiz(this,'q3')">Mine? (hopefully) 🥹</button>
+        </div>
+        <div class="answer-msg" id="ans-q3">Correct. Every single option. You exceeded one word. ❤️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LOVE METER ═══════ -->
+<section id="love-meter-sec">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">💞 Love Meter</h2>
+      <p>Let the universe decide... (spoiler: it already did)</p>
+    </div>
+    <div class="glass" id="love-meter">
+      <div class="meter-wrap"><div class="meter-fill" id="meter-fill"></div></div>
+      <div id="meter-pct">0%</div>
+      <button class="calc-btn" id="calc-btn">✨ Calculate Our Destiny</button>
+      <div id="destiny-msg">💕 The universe thinks we look cute together.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CATCH HEARTS MINI-GAME ═══════ -->
+<section id="catch-game-sec">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">🎮 Catch My Heart!</h2>
+      <p>Move your mouse (or finger) to catch the falling hearts. Don't let them escape! 🥺</p>
+    </div>
+    <div class="glass">
+      <div id="catch-info" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div id="catch-score-display">Score: 0</div>
+        <div id="catch-lives">❤️❤️❤️</div>
+      </div>
+      <div id="catch-arena">
+        <div id="catcher"></div>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button id="catch-start-btn">💘 Start Game</button>
+        <div id="catch-msg">Catch as many hearts as you can!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MEMORY MATCH GAME ═══════ -->
+<section id="match-game-sec">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">🃏 Memory Match</h2>
+      <p>Find all the matching pairs! Each match = a little piece of my heart. 💝</p>
+    </div>
+    <div class="glass">
+      <div id="match-info">
+        <span>Moves: <b id="match-moves">0</b></span>
+        <span>Pairs: <b id="match-pairs">0</b>/8</span>
+        <span id="match-timer-display">Time: <b id="match-time">0s</b></span>
+      </div>
+      <div id="match-grid"></div>
+      <div style="text-align:center;margin-top:14px;">
+        <button id="match-start-btn">💖 Start Match</button>
+        <div id="match-msg">Flip cards to find matching emoji pairs!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MEMORY WALL ═══════ -->
+<section id="memory">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">🌸 Memory Wall</h2>
+      <p>Tap a card to unlock a memory...</p>
+    </div>
+    <div class="memory-grid">
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"The first time I saw you..."</div>
+          <div class="mem-back">I didn't think much of it. But my heart did. It's been talking about you since. 🌷</div>
+        </div>
+      </div>
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"My favorite thing about you..."</div>
+          <div class="mem-back">The way you laugh without holding back. It sounds like the world exhaling. 🌙</div>
+        </div>
+      </div>
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"The moment I realized I liked you..."</div>
+          <div class="mem-back">When I caught myself hoping you'd text first. And then smiling when you did. 💌</div>
+        </div>
+      </div>
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"Something I've never told you..."</div>
+          <div class="mem-back">I rehearse conversations with you even when we're just saying hi. Every. Single. Time. 🫶</div>
+        </div>
+      </div>
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"A little wish I have..."</div>
+          <div class="mem-back">That one day, I'll find the courage to say all of this out loud. To your face. 🥹✨</div>
+        </div>
+      </div>
+      <div class="mem-card" onclick="flipCard(this)">
+        <div class="mem-inner">
+          <div class="mem-front">"What I think when you're near..."</div>
+          <div class="mem-back">That maybe — just maybe — this feeling isn't one-sided. 💕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECRET LETTER ═══════ -->
+<section id="secret">
+  <div class="container">
+    <div class="sec-title">
+      <h2 class="display">🔒 Secret Letter</h2>
+      <p>This one took the most courage to write.</p>
+    </div>
+    <div class="glass" style="text-align:center;">
+      <div class="envelope-wrap" id="envelope">📩</div><br><br>
+      <button class="open-btn" id="open-letter-btn">💌 Open Secret Letter</button>
+      <div class="letter-reveal" id="letter-reveal">
+        <p id="letter-text"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FINAL ═══════ -->
+<section id="final">
+  <div class="container">
+    <div class="glass">
+      <h2 class="display" style="margin-bottom:12px;">"If I asked you on a date..."</h2>
+      <p style="margin-bottom:32px;font-style:italic;opacity:.8;">...what would you say? 🥺</p>
+      <div class="choice-btns">
+        <button class="yes-btn" onclick="missionSuccess()">Yes ❤️</button>
+        <button class="yes-btn" onclick="missionSuccess()">Definitely Yes 💖</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Made with courage, hope, and a little bit of overthinking. ❤️</p>
+  <p style="margin-top:8px;font-size:.8rem;opacity:.5;">[ type "CRUSH" for a secret 🤫 | click the floating hearts for points 💗 ]</p>
+</footer>
+
+<!-- SUCCESS OVERLAY -->
+<div id="success-overlay">
+  <div style="font-size:5rem;margin-bottom:16px;animation:pulse 1s infinite;">💕</div>
+  <h1 class="display">Mission Successful 💕</h1>
+  <p>"You just made someone's day."</p>
+  <p style="margin-top:12px;font-size:1rem;opacity:.8;">And maybe their whole year. 🥹</p>
+  <button class="close-overlay" onclick="closeOverlay()">💌 Close</button>
+</div>
+
+<div id="easter-msg"></div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT — ALL SYSTEMS
+═══════════════════════════════════════ -->
+<script>
+'use strict';
+/* ══════════════════════════════════════════
+   1. SAVE / LOAD  (localStorage)
+══════════════════════════════════════════ */
+const SAVE_KEY = 'crushSim_v2';
+let state = {
+  heartPts: 0,
+  dark: false,
+  quizAnswered: {},
+  meterDone: false,
+  meterValue: 0,
+  cardsFlipped: [],
+  letterOpened: false,
+  catchHighScore: 0,
+  matchBestMoves: null,
+  matchBestTime: null,
+  musicOn: false,
+  easterFound: false,
+  fiftyFound: false,
+};
+function saveState(){
+  try{
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    const ind = document.getElementById('save-indicator');
+    ind.style.display='block';
+    clearTimeout(ind._t);
+    ind._t = setTimeout(()=>ind.style.display='none', 1500);
+  }catch(e){}
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(raw) state = Object.assign(state, JSON.parse(raw));
+  }catch(e){}
+}
+loadState();
+
+
+/* ══════════════════════════════════════════
+   2. TOAST NOTIFICATIONS
+══════════════════════════════════════════ */
+function showToast(msg, duration=2800){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{
+    t.style.animation='toastOut .3s ease forwards';
+    setTimeout(()=>t.remove(),350);
+  },duration);
+}
+
+
+/* ══════════════════════════════════════════
+   3. TYPEWRITER EFFECT
+══════════════════════════════════════════ */
+function typewriter(el, text, speed=38, onDone){
+  el.innerHTML='';
+  const cursor=document.createElement('span');
+  cursor.className='tw-cursor';
+  el.appendChild(cursor);
+  let i=0;
+  const iv=setInterval(()=>{
+    if(i<text.length){
+      el.insertBefore(document.createTextNode(text[i]),cursor);
+      i++;
+    } else {
+      clearInterval(iv);
+      setTimeout(()=>cursor.remove(),800);
+      if(onDone) onDone();
+    }
+  },speed);
+}
+
+// Hero typewriter on load
+window.addEventListener('DOMContentLoaded',()=>{
+  const h1=document.getElementById('hero-title');
+  const sub=document.getElementById('hero-sub');
+  typewriter(h1,'"Hey, I Have Something To Tell You..."',45,()=>{
+    setTimeout(()=>typewriter(sub,'"Every day feels a little brighter because you\'re in it."',38),400);
+  });
+  restoreState();
+});
+
+
+/* ══════════════════════════════════════════
+   4. RESTORE SAVED STATE TO UI
+══════════════════════════════════════════ */
+function restoreState(){
+  // hearts
+  updateScoreDisplay();
+  // dark mode
+  if(state.dark){
+    document.body.classList.add('dark');
+    document.getElementById('dark-toggle').textContent='☀️';
+    spawnStars();
+  }
+  // quiz
+  Object.keys(state.quizAnswered).forEach(qid=>{
+    const card=document.getElementById(qid);
+    if(!card) return;
+    card.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=true;b.style.opacity='.5';});
+    document.getElementById('ans-'+qid).style.display='block';
+  });
+  // meter
+  if(state.meterDone){
+    const fill=document.getElementById('meter-fill');
+    const pct=document.getElementById('meter-pct');
+    fill.style.width=state.meterValue+'%';
+    pct.textContent=state.meterValue+'%';
+    document.getElementById('destiny-msg').style.display='block';
+    document.getElementById('calc-btn').disabled=true;
+  }
+  // memory cards
+  state.cardsFlipped.forEach(idx=>{
+    const cards=document.querySelectorAll('.mem-card');
+    if(cards[idx]) cards[idx].classList.add('flipped');
+  });
+  // letter
+  if(state.letterOpened){
+    document.getElementById('envelope').textContent='💌';
+    document.getElementById('envelope').classList.add('open');
+    document.getElementById('letter-reveal').style.display='block';
+    document.getElementById('open-letter-btn').style.display='none';
+    document.getElementById('letter-text').textContent=LETTER_TEXT;
+  }
+  // catch high score
+  if(state.catchHighScore>0)
+    document.getElementById('catch-msg').textContent=`Best: ${state.catchHighScore} hearts! 🏆`;
+}
+
+
+/* ══════════════════════════════════════════
+   5. WEB AUDIO — GENERATED MUSIC
+══════════════════════════════════════════ */
+let audioCtx=null, musicNodes=[], musicOn=state.musicOn;
+
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+}
+
+// Romantic pentatonic melody
+const NOTES = [261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99,880];
+const MELODY = [0,2,4,5,2,4,7,5,4,2,0,4,5,7,9,7,5,4,2,0];
+let melodyStep=0, melodyTimer=null;
+
+function playNote(freq, when, dur, vol=0.18){
+  if(!audioCtx) return;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type='sine';
+  osc.frequency.setValueAtTime(freq,when);
+  gain.gain.setValueAtTime(0,when);
+  gain.gain.linearRampToValueAtTime(vol,when+0.05);
+  gain.gain.exponentialRampToValueAtTime(0.001,when+dur);
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.start(when);osc.stop(when+dur+0.1);
+  musicNodes.push(osc);
+}
+
+function playChord(root,when){
+  if(!audioCtx) return;
+  [0,4,7].forEach(interval=>{
+    playNote(root*Math.pow(2,interval/12),when,1.2,0.06);
+  });
+}
+
+function scheduleMelody(){
+  if(!musicOn||!audioCtx) return;
+  const now=audioCtx.currentTime;
+  const idx=MELODY[melodyStep%MELODY.length];
+  playNote(NOTES[idx],now,0.35,0.2);
+  if(melodyStep%4===0) playChord(NOTES[idx]*0.5,now);
+  melodyStep++;
+  melodyTimer=setTimeout(scheduleMelody,360+Math.random()*80);
+}
+
+const musicToggleBtn=document.getElementById('music-toggle');
+musicToggleBtn.addEventListener('click',()=>{
+  initAudio();
+  musicOn=!musicOn;
+  state.musicOn=musicOn;
+  saveState();
+  if(musicOn){
+    audioCtx.resume();
+    scheduleMelody();
+    musicToggleBtn.textContent='🔇';
+    showToast('🎵 Romantic music playing...');
+  } else {
+    clearTimeout(melodyTimer);
+    musicToggleBtn.textContent='🎵';
+  }
+});
+if(state.musicOn) musicToggleBtn.textContent='🔇'; // restore icon (won't autoplay without gesture)
+
+
+/* ══════════════════════════════════════════
+   6. DARK MODE + STARS
+══════════════════════════════════════════ */
+document.getElementById('dark-toggle').addEventListener('click',()=>{
+  state.dark=!state.dark;
+  document.body.classList.toggle('dark',state.dark);
+  document.getElementById('dark-toggle').textContent=state.dark?'☀️':'🌙';
+  state.dark ? spawnStars() : removeStars();
+  saveState();
+});
+function spawnStars(){
+  removeStars();
+  for(let i=0;i<70;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()*2.5+.8;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}vh;left:${Math.random()*100}vw;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*4}s;`;
+    document.body.appendChild(s);
+  }
+}
+function removeStars(){document.querySelectorAll('.star').forEach(s=>s.remove());}
+
+
+/* ══════════════════════════════════════════
+   7. HEART SCORE
+══════════════════════════════════════════ */
+const scoreEl=document.getElementById('heart-score');
+function addHeart(n=1){
+  state.heartPts+=n;
+  updateScoreDisplay();
+  saveState();
+  if(!state.fiftyFound && state.heartPts>=50){
+    state.fiftyFound=true;
+    showEaster('🎉 50 Hearts Collected! "You have the most beautiful heart." 💖');
+    saveState();
+  }
+}
+function updateScoreDisplay(){
+  scoreEl.textContent='💗 '+state.heartPts;
+  scoreEl.style.transform='scale(1.3)';
+  setTimeout(()=>scoreEl.style.transform='',200);
+}
+
+
+/* ══════════════════════════════════════════
+   8. FLOATING BG HEARTS
+══════════════════════════════════════════ */
+const hc=document.getElementById('hearts-bg');
+const heartChars=['💗','💓','💕','💖','💝','🌸','✨','💫'];
+function spawnBgHeart(){
+  const el=document.createElement('span');
+  el.className='bg-heart';
+  el.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
+  el.style.left=Math.random()*100+'%';
+  el.style.fontSize=(Math.random()*1.2+0.7)+'rem';
+  const dur=Math.random()*10+8;
+  el.style.animationDuration=dur+'s';
+  el.style.animationDelay=Math.random()*3+'s';
+  hc.appendChild(el);
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    addHeart(1);
+    spawnBurst(e.clientX,e.clientY,3);
+    playChime();
+    el.remove();
+  });
+  setTimeout(()=>el.remove(),(dur+4)*1000);
+}
+for(let i=0;i<18;i++) spawnBgHeart();
+setInterval(spawnBgHeart,1500);
+
+
+/* ══════════════════════════════════════════
+   9. ADVANCED HEART PHYSICS PARTICLE
+══════════════════════════════════════════ */
+function spawnPhysicsHeart(x,y){
+  const el=document.createElement('span');
+  el.className='phys-heart';
+  el.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
+  el.style.left=x+'px';el.style.top=y+'px';
+  document.body.appendChild(el);
+  let vx=(Math.random()-0.5)*6;
+  let vy=-(Math.random()*8+4);
+  let ay=0.25;
+  let opacity=1;
+  let px=x,py=y;
+  function frame(){
+    vx*=0.98;vy+=ay;px+=vx;py+=vy;opacity-=0.018;
+    el.style.left=px+'px';el.style.top=py+'px';el.style.opacity=opacity;
+    el.style.transform=`scale(${opacity*1.2}) rotate(${vx*8}deg)`;
+    if(opacity>0) requestAnimationFrame(frame); else el.remove();
+  }
+  requestAnimationFrame(frame);
+}
+
+
+/* ══════════════════════════════════════════
+   10. BURST (simple radial)
+══════════════════════════════════════════ */
+function spawnBurst(x,y,count){
+  const h=['💗','💓','💕','💖','💝','✨'];
+  for(let i=0;i<count;i++){
+    const el=document.createElement('span');
+    el.className='burst-heart';
+    el.textContent=h[Math.floor(Math.random()*h.length)];
+    el.style.left=x+'px';el.style.top=y+'px';
+    const angle=Math.random()*Math.PI*2;
+    const dist=80+Math.random()*120;
+    el.style.setProperty('--dx',Math.cos(angle)*dist+'px');
+    el.style.setProperty('--dy',Math.sin(angle)*dist+'px');
+    el.style.animationDuration=(.6+Math.random()*.5)+'s';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),1200);
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   11. CONFETTI
+══════════════════════════════════════════ */
+function spawnConfetti(){
+  const cols=['#f9a8d4','#c4b5fd','#a5f3fc','#fde68a','#f43f5e','#7c3aed','#10b981'];
+  for(let i=0;i<90;i++){
+    const el=document.createElement('div');
+    el.className='confetti-piece';
+    el.style.cssText=`left:${Math.random()*100}vw;top:${-Math.random()*20}px;background:${cols[~~(Math.random()*cols.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()<.5?'50%':'2px'};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.8}s;`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4000);
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   12. AUDIO CHIME (Web Audio)
+══════════════════════════════════════════ */
+function playChime(freq=660){
+  if(!audioCtx) return;
+  playNote(freq,audioCtx.currentTime,0.25,0.12);
+}
+function playSuccess(){
+  if(!audioCtx) return;
+  const now=audioCtx.currentTime;
+  [523,659,784,1046].forEach((f,i)=>playNote(f,now+i*0.12,0.4,0.15));
+}
+
+
+/* ══════════════════════════════════════════
+   13. HERO BUTTON
+══════════════════════════════════════════ */
+document.getElementById('open-heart-btn').addEventListener('click',function(e){
+  initAudio();
+  spawnBurst(e.clientX,e.clientY,14);
+  for(let i=0;i<6;i++) setTimeout(()=>spawnPhysicsHeart(e.clientX,e.clientY),i*80);
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth',block:'start'});
+  playChime(880);
+  showToast('💌 Opening your heart...');
+});
+
+
+/* ══════════════════════════════════════════
+   14. CLICK ANYWHERE — physics hearts
+══════════════════════════════════════════ */
+document.addEventListener('click',e=>{
+  if(e.target.closest('#topbar,.opt-btn,.hero-btn,.calc-btn,.yes-btn,.open-btn,#catch-start-btn,#match-start-btn,#match-grid,.catch-arena')) return;
+  if(Math.random()<0.12){
+    spawnPhysicsHeart(e.clientX,e.clientY);
+    addHeart(1);
+  }
+});
+
+
+/* ══════════════════════════════════════════
+   15. QUIZ
+══════════════════════════════════════════ */
+function answerQuiz(btn,qid){
+  if(state.quizAnswered[qid]) return;
+  const card=document.getElementById(qid);
+  card.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=true;b.style.opacity='.5';});
+  btn.classList.add('correct');btn.style.opacity='1';
+  document.getElementById('ans-'+qid).style.display='block';
+  spawnBurst(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top,6);
+  addHeart(3);
+  initAudio();playChime(784);
+  state.quizAnswered[qid]=true;
+  saveState();
+  showToast('Correct! The answer is always everything. ❤️');
+}
+
+
+/* ══════════════════════════════════════════
+   16. LOVE METER
+══════════════════════════════════════════ */
+document.getElementById('calc-btn').addEventListener('click',function(){
+  if(state.meterDone) return;
+  this.disabled=true;
+  initAudio();
+  const fill=document.getElementById('meter-fill');
+  const pct=document.getElementById('meter-pct');
+  const target=90+Math.floor(Math.random()*11);
+  let cur=0;
+  const iv=setInterval(()=>{
+    cur+=Math.random()<0.3?2:1;
+    if(cur>=target){
+      cur=target;clearInterval(iv);
+      document.getElementById('destiny-msg').style.display='block';
+      spawnConfetti();addHeart(10);
+      playSuccess();
+      state.meterDone=true;state.meterValue=target;saveState();
+      showToast('💕 Destiny confirmed by the universe!');
+    }
+    fill.style.width=cur+'%';pct.textContent=cur+'%';
+  },40);
+});
+
+
+/* ══════════════════════════════════════════
+   17. MEMORY CARDS
+══════════════════════════════════════════ */
+function flipCard(card){
+  card.classList.toggle('flipped');
+  const cards=[...document.querySelectorAll('.mem-card')];
+  const idx=cards.indexOf(card);
+  if(card.classList.contains('flipped')){
+    addHeart(2);
+    initAudio();playChime(523+idx*30);
+    if(!state.cardsFlipped.includes(idx)){
+      state.cardsFlipped.push(idx);saveState();
+    }
+  } else {
+    state.cardsFlipped=state.cardsFlipped.filter(i=>i!==idx);saveState();
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   18. SECRET LETTER — typewriter reveal
+══════════════════════════════════════════ */
+const LETTER_TEXT=`"Maybe this is just a website...
+
+But every word here is real.
+
+You make ordinary days feel special. You turn mundane moments into ones I replay at night. And maybe you'll never fully know how much space you take up in a heart that's trying so hard to be brave.
+
+So here it is — written in pink and lavender, wrapped in code and quiet hope:
+
+I like you. A lot. More than I know what to do with.
+
+— Someone who overthought every line of this 💖"`;
+
+document.getElementById('open-letter-btn').addEventListener('click',function(){
+  initAudio();
+  const env=document.getElementById('envelope');
+  const letter=document.getElementById('letter-reveal');
+  env.classList.add('open');env.textContent='💌';
+  letter.style.display='block';
+  this.style.display='none';
+  spawnBurst(env.getBoundingClientRect().left+40,env.getBoundingClientRect().top+40,12);
+  addHeart(5);playChime(659);
+  const el=document.getElementById('letter-text');
+  typewriter(el,LETTER_TEXT,22);
+  state.letterOpened=true;saveState();
+  showToast('💌 A letter, just for you...');
+});
+
+
+/* ══════════════════════════════════════════
+   19. FINAL — MISSION SUCCESS
+══════════════════════════════════════════ */
+function missionSuccess(){
+  initAudio();
+  document.getElementById('success-overlay').classList.add('show');
+  spawnConfetti();setTimeout(spawnConfetti,600);setTimeout(spawnConfetti,1200);
+  addHeart(20);playSuccess();
+  for(let i=0;i<20;i++) setTimeout(()=>spawnPhysicsHeart(Math.random()*window.innerWidth,Math.random()*window.innerHeight*.5),i*80);
+  saveState();
+}
+function closeOverlay(){
+  document.getElementById('success-overlay').classList.remove('show');
+}
+
+
+/* ══════════════════════════════════════════
+   20. EASTER EGGS
+══════════════════════════════════════════ */
+// Keyboard CRUSH
+let typed='';
+document.addEventListener('keydown',e=>{
+  typed=(typed+e.key).slice(-5).toUpperCase();
+  if(typed==='CRUSH'){
+    if(!state.easterFound){
+      state.easterFound=true;saveState();addHeart(15);
+    }
+    initAudio();playSuccess();
+    showEaster('💖 Secret Unlocked: "If courage were easy, I would\'ve told you a hundred times already. But you\'re worth the wait." 🌹');
+    spawnBurst(window.innerWidth/2,window.innerHeight/2,24);
+    for(let i=0;i<16;i++) setTimeout(()=>spawnPhysicsHeart(Math.random()*window.innerWidth,Math.random()*window.innerHeight),i*60);
+    spawnConfetti();
+  }
+});
+function showEaster(msg){
+  const el=document.getElementById('easter-msg');
+  el.textContent=msg;el.style.display='block';
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.style.display='none',6000);
+}
+
+
+/* ══════════════════════════════════════════
+   21. CATCH HEARTS MINI-GAME
+══════════════════════════════════════════ */
+(function(){
+  const arena=document.getElementById('catch-arena');
+  const catcher=document.getElementById('catcher');
+  const scoreDisp=document.getElementById('catch-score-display');
+  const livesDisp=document.getElementById('catch-lives');
+  const msg=document.getElementById('catch-msg');
+  const btn=document.getElementById('catch-start-btn');
+
+  let running=false,catchScore=0,lives=3,spawnIv=null,frameId=null;
+  let catcherX=200;
+  const CATCHER_W=70;
+  const HEARTS_POOL=[];
+
+  // mouse / touch tracking
+  arena.addEventListener('mousemove',e=>{
+    const r=arena.getBoundingClientRect();
+    catcherX=Math.max(CATCHER_W/2,Math.min(r.width-CATCHER_W/2,e.clientX-r.left));
+    catcher.style.left=catcherX+'px';
+  });
+  arena.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    const r=arena.getBoundingClientRect();
+    catcherX=Math.max(CATCHER_W/2,Math.min(r.width-CATCHER_W/2,e.touches[0].clientX-r.left));
+    catcher.style.left=catcherX+'px';
+  },{passive:false});
+
+  // keyboard
+  document.addEventListener('keydown',e=>{
+    if(!running) return;
+    if(e.key==='ArrowLeft') catcherX=Math.max(CATCHER_W/2,catcherX-24);
+    if(e.key==='ArrowRight') catcherX=Math.min(arena.offsetWidth-CATCHER_W/2,catcherX+24);
+    catcher.style.left=catcherX+'px';
+  });
+
+  function spawnFallingHeart(){
+    const el=document.createElement('span');
+    el.className='falling-heart';
+    el.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
+    const arenaW=arena.offsetWidth;
+    const x=Math.random()*(arenaW-30)+15;
+    el.style.left=x+'px';
+    el.style.top='-30px';
+    const speed=1.8+Math.random()*2.2;
+    el.style.animationDuration=(speed+1)+'s';
+    arena.appendChild(el);
+    HEARTS_POOL.push({el,x,y:-30,speed});
+  }
+
+  function gameLoop(){
+    if(!running){return;}
+    const arenaH=arena.offsetHeight;
+    for(let i=HEARTS_POOL.length-1;i>=0;i--){
+      const h=HEARTS_POOL[i];
+      h.y+=h.speed;
+      h.el.style.top=h.y+'px';
+      // catch check
+      if(h.y>arenaH-50 && h.y<arenaH-10){
+        if(Math.abs(h.x-catcherX)<CATCHER_W/2+10){
+          // caught!
+          catchScore++;
+          scoreDisp.textContent='Score: '+catchScore;
+          addHeart(1);initAudio();playChime(880);
+          spawnBurst(arena.getBoundingClientRect().left+h.x,arena.getBoundingClientRect().top+h.y,3);
+          h.el.remove();HEARTS_POOL.splice(i,1);
+          continue;
+        }
+      }
+      // missed
+      if(h.y>arenaH+10){
+        lives--;
+        updateLives();
+        h.el.remove();HEARTS_POOL.splice(i,1);
+        if(lives<=0){endGame();return;}
+      }
+    }
+    frameId=requestAnimationFrame(gameLoop);
+  }
+
+  function updateLives(){
+    livesDisp.textContent=['','❤️','❤️❤️','❤️❤️❤️'][Math.max(0,lives)];
+  }
+
+  function startGame(){
+    running=true;catchScore=0;lives=3;
+    HEARTS_POOL.length=0;
+    arena.querySelectorAll('.falling-heart').forEach(e=>e.remove());
+    scoreDisp.textContent='Score: 0';
+    updateLives();
+    msg.textContent='Go! Move the catcher! 💘';
+    btn.textContent='Restart 🔄';
+    catcherX=arena.offsetWidth/2;catcher.style.left=catcherX+'px';
+    let delay=1200;
+    function sched(){
+      if(!running) return;
+      spawnFallingHeart();
+      delay=Math.max(400,delay-18);
+      spawnIv=setTimeout(sched,delay);
+    }
+    sched();
+    frameId=requestAnimationFrame(gameLoop);
+  }
+
+  function endGame(){
+    running=false;
+    clearTimeout(spawnIv);cancelAnimationFrame(frameId);
+    if(catchScore>state.catchHighScore){
+      state.catchHighScore=catchScore;saveState();
+      msg.textContent=`New Best: ${catchScore} hearts! 🏆 +${catchScore} points added!`;
+      addHeart(catchScore);spawnConfetti();
+    } else {
+      msg.textContent=`Game Over! You caught ${catchScore} hearts 💔 (Best: ${state.catchHighScore})`;
+    }
+    btn.textContent='💘 Play Again';
+    HEARTS_POOL.length=0;
+    arena.querySelectorAll('.falling-heart').forEach(e=>e.remove());
+  }
+
+  btn.addEventListener('click',startGame);
+})();
+
+
+/* ══════════════════════════════════════════
+   22. MEMORY MATCH GAME
+══════════════════════════════════════════ */
+(function(){
+  const EMOJIS=['💖','💌','🌸','✨','🥹','💫','🌹','🎀'];
+  const grid=document.getElementById('match-grid');
+  const movesEl=document.getElementById('match-moves');
+  const pairsEl=document.getElementById('match-pairs');
+  const timeEl=document.getElementById('match-time');
+  const msgEl=document.getElementById('match-msg');
+  const btn=document.getElementById('match-start-btn');
+
+  let cards=[],flipped=[],matched=0,moves=0,locked=false,timerIv=null,elapsed=0,running=false;
+
+  function shuffle(arr){return arr.sort(()=>Math.random()-.5);}
+
+  function buildGrid(){
+    grid.innerHTML='';
+    cards=[];flipped=[];matched=0;moves=0;locked=false;elapsed=0;
+    movesEl.textContent='0';pairsEl.textContent='0';timeEl.textContent='0s';
+    const deck=shuffle([...EMOJIS,...EMOJIS]);
+    deck.forEach((emoji,i)=>{
+      const card=document.createElement('div');
+      card.className='match-card';
+      card.dataset.emoji=emoji;card.dataset.idx=i;
+      card.innerHTML=`<div class="card-face card-back"></div><div class="card-face card-front">${emoji}</div>`;
+      card.addEventListener('click',()=>handleFlip(card));
+      grid.appendChild(card);
+      cards.push(card);
+    });
+  }
+
+  function handleFlip(card){
+    if(!running||locked||card.classList.contains('revealed')||card.classList.contains('matched')) return;
+    card.classList.add('revealed');
+    initAudio();playChime(523+flipped.length*100);
+    flipped.push(card);
+    if(flipped.length===2){
+      locked=true;moves++;movesEl.textContent=moves;
+      const [a,b]=flipped;
+      if(a.dataset.emoji===b.dataset.emoji){
+        // match!
+        setTimeout(()=>{
+          a.classList.add('matched');b.classList.add('matched');
+          matched++;pairsEl.textContent=matched;
+          addHeart(3);playChime(880);
+          spawnBurst(b.getBoundingClientRect().left+30,b.getBoundingClientRect().top+30,4);
+          flipped=[];locked=false;
+          if(matched===8) winGame();
+        },300);
+      } else {
+        setTimeout(()=>{
+          a.classList.remove('revealed');b.classList.remove('revealed');
+          flipped=[];locked=false;
+        },900);
+      }
+    }
+  }
+
+  function startTimer(){
+    clearInterval(timerIv);elapsed=0;
+    timerIv=setInterval(()=>{elapsed++;timeEl.textContent=elapsed+'s';},1000);
+  }
+
+  function winGame(){
+    clearInterval(timerIv);running=false;
+    let msg=`🎉 You matched all pairs in ${moves} moves & ${elapsed}s!`;
+    const isNewBest=(state.matchBestMoves===null||moves<state.matchBestMoves);
+    if(isNewBest){
+      state.matchBestMoves=moves;state.matchBestTime=elapsed;saveState();
+      msg+=' New personal best! 🏆';
+      addHeart(20);spawnConfetti();playSuccess();
+    } else {
+      addHeart(10);spawnConfetti();playSuccess();
+    }
+    msgEl.textContent=msg;
+    btn.textContent='💖 Play Again';
+    showToast('Perfect! All pairs matched! 💕');
+  }
+
+  btn.addEventListener('click',()=>{
+    buildGrid();running=true;startTimer();
+    msgEl.textContent='Find all the matching pairs! 💝';
+    btn.textContent='🔄 Restart';
+  });
+})();
+
+
+/* ══════════════════════════════════════════
+   23. PERIODIC AUTO-SAVE
+══════════════════════════════════════════ */
+setInterval(saveState, 10000);
+
+</script>
+</body>
+</html>
