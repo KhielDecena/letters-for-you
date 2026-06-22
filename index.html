@@ -661,24 +661,25 @@ function scheduleMelody(){
   melodyTimer=setTimeout(scheduleMelody,360+Math.random()*80);
 }
 
-const musicToggleBtn=document.getElementById('music-toggle');
-musicToggleBtn.addEventListener('click',()=>{
-  initAudio();
-  musicOn=!musicOn;
-  state.musicOn=musicOn;
-  saveState();
-  if(musicOn){
-    audioCtx.resume();
-    scheduleMelody();
-    musicToggleBtn.textContent='🔇';
-    showToast('🎵 Romantic music playing...');
+const savedMusicState = localStorage.getItem('musicOn') === 'true';
+
+if (savedMusicState) {
+  musicOn = true;
+  musicToggleBtn.textContent = '🔇';
+}
+
+musicToggleBtn.addEventListener('click', () => {
+  musicOn = !musicOn;
+  localStorage.setItem('musicOn', musicOn);
+
+  if (musicOn) {
+    bgMusic.play();
+    musicToggleBtn.textContent = '🔇';
   } else {
-    clearTimeout(melodyTimer);
-    musicToggleBtn.textContent='🎵';
+    bgMusic.pause();
+    musicToggleBtn.textContent = '🎵';
   }
 });
-if(state.musicOn) musicToggleBtn.textContent='🔇'; // restore icon (won't autoplay without gesture)
-
 
 /* ══════════════════════════════════════════
    6. DARK MODE + STARS
